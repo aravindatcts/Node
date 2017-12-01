@@ -19,8 +19,10 @@
       "model": "slas",
       "property": "slalList",
       "options": {
-        "validate": false,
-        "forceId": true
+        "validate": true,
+        "autoId": true,
+       "persistent": true,
+       "forceId": false
       }
     }
   },
