@@ -1,0 +1,12 @@
+{
+  "mongods": {
+    "host": "localhost",
+    "port": 27017,
+    "url": "",
+    "database": "well-mark-dash-board-dev",
+    "password": "",
+    "name": "mongods",
+    "user": "",
+    "connector": "mongodb"
+  }
+}

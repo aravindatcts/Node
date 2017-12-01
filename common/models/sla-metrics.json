@@ -1,0 +1,29 @@
+{
+  "name": "slaMetrics",
+  "plural": "slametrics",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+      "slas": {
+      "type": "embedsMany",
+      "model": "slas",
+      "property": "slalList",
+      "options": {
+        "validate": false,
+        "forceId": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

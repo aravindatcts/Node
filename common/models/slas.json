@@ -1,0 +1,29 @@
+{
+  "name": "slas",
+  "base": "PersistedModel",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "slaname": {
+      "type": "string",
+      "required": true
+    },
+    "slagoal": {
+      "type": "number",
+      "required": true
+    },
+    "slaachieved": {
+      "type": "number",
+      "required": true
+    },
+    "comments": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
