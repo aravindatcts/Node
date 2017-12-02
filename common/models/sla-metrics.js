@@ -2,8 +2,6 @@
 
 var moment = require('moment');
 
-
-
 module.exports = function(Slametrics) {
 
 Slametrics.getLatestSlaMetrics = (month,cb) => {
@@ -48,11 +46,13 @@ Slametrics.getTrendMetrics = (month,date,limit,cb) => {
               { 'date': { lt: nextDate }},
 
            ]},
+     //  include: ['slas'],
        order: 'date DESC',
        limit: limit
      };
 
   return Slametrics.find(filter).then(function(slametrics) {
+
       return slametrics;
     }).catch(function(err) {
       console.log(err);
@@ -72,7 +72,7 @@ Slametrics.getTrendMetrics = (month,date,limit,cb) => {
           path : '/getTrendMetrics',
           verb : 'get'
       },
-      returns: {arg: 'slametrics', type:'object'}
+      returns: [{arg: 'slametrics', type:'Object'}]
   });
 
 };
