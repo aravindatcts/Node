@@ -76,7 +76,17 @@ Slametrics.getTrendMetrics = (month,date,limit,cb) => {
 
 Slametrics.getMetricsForDate = (month,date,cb) => {
 
-  var nextDate = moment(date).add(1,'d').toDate();
+ var nextDate;
+  if (month){
+       
+     nextDate = moment(date).add(1,'M').toDate();
+     console.log(nextDate);
+  } else 
+  {
+      nextDate = moment(date).add(1,'d').toDate();
+  }
+
+  console.log(nextDate);
 
    //Filter based on month Indicator and  sort it based on the latest date   
    var filter =   { 
