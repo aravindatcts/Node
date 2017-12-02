@@ -10,19 +10,34 @@
     "date": {
       "type": "date",
       "required": true
+    },
+    "month_ind": {
+      "type": "boolean",
+      "required": true,
+      "default":false
+    },
+    "lob_name": {
+      "type": "string",
+      "required": true
+    },
+    "sla_reasons": {
+      "type": [
+        "string"
+      ],
+      "required": false
     }
   },
   "validations": [],
   "relations": {
-      "slas": {
+    "slas": {
       "type": "embedsMany",
       "model": "slas",
       "property": "slalList",
       "options": {
         "validate": true,
         "autoId": true,
-       "persistent": true,
-       "forceId": false
+        "persistent": true,
+        "forceId": false
       }
     }
   },

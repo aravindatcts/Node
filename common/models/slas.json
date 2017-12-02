@@ -8,8 +8,8 @@
   "properties": {
     "slaname": {
       "type": "string",
-      "required": true,
-      "id":true
+      "id": true,
+      "required": true
     },
     "slagoal": {
       "type": "number",
@@ -18,14 +18,21 @@
     "slaachieved": {
       "type": "number",
       "required": false
-    },
-    "comments": {
-      "type": "string",
-      "required" :false
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "slacomments": {
+      "type": "embedsMany",
+      "model": "slacomments",
+     "options": {
+        "validate": true,
+        "autoId": true,
+        "persistent": true,
+        "forceId": false
+      }
+    }
+  },
   "acls": [],
   "methods": {}
 }

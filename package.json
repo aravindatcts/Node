@@ -22,8 +22,10 @@
     "strong-error-handler": "^2.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.3",
     "eslint": "^3.17.1",
     "eslint-config-loopback": "^8.0.0",
+    "eslint-config-standard": "^10.2.1",
     "nsp": "^2.1.0"
   },
   "repository": {

@@ -15,10 +15,17 @@
   },
   "slaMetrics": {
     "dataSource": "mongods",
-    "public": true
+    "public": true,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
   },
   "slas": {
     "dataSource": "mongods",
     "public": false
+  },
+  "slacomments": {
+    "dataSource": "mongods",
+    "public": true
   }
 }

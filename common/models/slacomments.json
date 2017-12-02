@@ -1,0 +1,25 @@
+{
+  "name": "slacomments",
+  "plural": "slacomments",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "userid": {
+      "type": "string"
+    },
+    "updatedDate": {
+      "type": "date",
+      "id":true
+    },
+    "comment": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
