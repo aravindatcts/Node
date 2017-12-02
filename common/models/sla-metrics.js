@@ -4,9 +4,7 @@ var moment = require('moment');
 
 module.exports = function(Slametrics) {
 
-Slametrics.getLatestSlaMetrics = (month,cb) => {
-
-   //Filter based on month Indicator and  sort it based on the latest date   
+Slametrics.getLatestSlaMetrics = (month,cb) => {  
    var filter =   { 
        where : {month_ind : month},
        order: 'date DESC' };
@@ -36,7 +34,6 @@ Slametrics.getLatestSlaMetrics = (month,cb) => {
 Slametrics.getTrendMetrics = (month,date,limit,cb) => {
 
   var nextDate = moment(date).add(1,'d').toDate();
-
    //Filter based on month Indicator and  sort it based on the latest date   
    var filter =   { 
        where :
@@ -74,5 +71,46 @@ Slametrics.getTrendMetrics = (month,date,limit,cb) => {
       },
       returns: [{arg: 'slametrics', type:'Object'}]
   });
+
+
+
+Slametrics.getMetricsForDate = (month,date,cb) => {
+
+  var nextDate = moment(date).add(1,'d').toDate();
+
+   //Filter based on month Indicator and  sort it based on the latest date   
+   var filter =   { 
+       where :
+           {'and': 
+             [ {'month_ind' : month},
+              { 'date': { between: [date,nextDate] }}
+           ]}
+     };
+
+  return Slametrics.findOne(filter).then(function(slametrics) {
+
+      return slametrics;
+    }).catch(function(err) {
+      console.log(err);
+    });
+
+};
+
+
+
+ //Get Metrics for provided Date 
+  Slametrics.remoteMethod('getMetricsForDate',{
+      description: "Get metrics for provided Date ", 
+      accepts : [ 
+          {arg:'month',type:'Boolean'},
+          {arg:'date' ,type:'Date'}
+      ],
+      http: { 
+          path : '/getMetricsForDate',
+          verb : 'get'
+      },
+      returns: [{arg: 'slametrics', type:'Object'}]
+  });
+
 
 };
