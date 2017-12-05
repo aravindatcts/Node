@@ -98,15 +98,12 @@ Slametrics.getMetricsForDate = (month,date,cb) => {
      };
 
   return Slametrics.findOne(filter).then(function(slametrics) {
-
       return slametrics;
     }).catch(function(err) {
       console.log(err);
     });
 
 };
-
-
 
  //Get Metrics for provided Date 
   Slametrics.remoteMethod('getMetricsForDate',{

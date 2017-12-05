@@ -18,6 +18,12 @@
     "slaachieved": {
       "type": "number",
       "required": false
+    },
+    "sla_reasons": {
+      "type": [
+        "string"
+      ],
+      "required": false
     }
   },
   "validations": [],
