@@ -1,7 +1,7 @@
 {
   "mongods": {
-    "host": "${MONGO_HOST}",
-    "port": "${MONGO_PORT}",
+    "host": "52.15.83.203",
+    "port": "27019",
     "url": "",
     "database": "well-mark-dash-board-dev",
     "password": "",

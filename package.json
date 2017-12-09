@@ -20,7 +20,9 @@
     "loopback-connector-mongodb": "^1.18.1",
     "moment": "^2.19.3",
     "serve-favicon": "^2.0.1",
-    "strong-error-handler": "^2.0.0"
+    "socket.io": "^2.0.4",
+    "strong-error-handler": "^2.0.0",
+    "mongodb": "github:mongodb/node-mongodb-native#3.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.3",

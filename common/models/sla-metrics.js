@@ -1,13 +1,52 @@
 'use strict';
 
 var moment = require('moment');
+var pubsub = require('../../server/pubsub.js');
+var loopback = require('loopback');
 
+//var app = module.exports = loopback();
+
+
+//app.io = require('socket.io').listen();
 module.exports = function(Slametrics) {
 
-Slametrics.getLatestSlaMetrics = (month,cb) => {  
-   var filter =   { 
-       where : {month_ind : month},
-       order: 'date DESC' };
+Slametrics.getLatestSlaMetrics = (month,lobname,cb) => {  
+
+  if (!lobname.trim()){
+      lobname = "Combined"
+  }
+
+   var filter = { 
+       where : {'and': [
+           { 'month_ind' : month},
+          {'lob_name' : lobname}
+       ],
+       order: 'date DESC' }};
+
+
+var coll = Slametrics.getDataSource().connector.collection('slaMetrics');
+
+var cursor = coll.aggregate([
+    { $changeStream: { fullDocument: 'updateLookup' } },
+    { $match: { operationType: { $in: ['update', 'replace'] } } }
+]);
+ 
+
+cursor.each(function(err, doc) {
+  let eventemitted = false;
+
+  if(!eventemitted) {
+    var socket = Slametrics.app.io;
+    pubsub.publish(socket, {
+      collectionName: 'slaMetrics',
+      data: JSON.stringify(doc.updateDescription),
+      method: 'update',
+    });
+    eventemitted = true;
+  }
+
+  });
+
 
   return Slametrics.findOne(filter).then(function(slametrics) {
       return slametrics;
@@ -20,7 +59,10 @@ Slametrics.getLatestSlaMetrics = (month,cb) => {
 //Get the latest SLA Metrics available, Pass Month=False for daily and Month = True for Monthly data
   Slametrics.remoteMethod('getLatestSlaMetrics',{
       description: "Get the latest SLA Metrics available, Pass Month=False for daily and Month = True for Monthly data", 
-      accepts : {arg:'month',type:'Boolean'},
+      accepts : [
+          {arg:'month',type:'Boolean'},
+          {arg:'lobname',type:'String'},
+      ],
       http: { 
           path : '/getLatestSlaMetrics',
           verb : 'get'
@@ -122,7 +164,7 @@ Slametrics.getMetricsForDate = (month,date,cb) => {
   });
   
 
-Slametrics.getMetricsForSlaName = (month,slaName,date,cb) => {
+Slametrics.getMetricsForSlaName = (month,slaName,lobName,date,cb) => {
 
  var nextDate;
   if (month){
@@ -139,6 +181,7 @@ Slametrics.getMetricsForSlaName = (month,slaName,date,cb) => {
        where :
            {'and': 
              [ {'month_ind' : month},
+              {'lob_name' : lobName},
               { 'date': { between: [date,nextDate] }},
               { 'slalList.slaname': slaName  }
            ]}
@@ -166,13 +209,12 @@ Slametrics.getMetricsForSlaName = (month,slaName,date,cb) => {
 };
 
 
-
-
-   Slametrics.remoteMethod('getMetricsForSlaName',{
+Slametrics.remoteMethod('getMetricsForSlaName',{
       description: "Get metrics for provided Date,SLANAME", 
       accepts : [ 
           {arg:'month',type:'Boolean'},
           {arg:'slaname',type:'String'},
+          {arg: 'lobname', type:'String'},
           {arg:'date' ,type:'Date'}
       ],
       http: { 
@@ -184,8 +226,6 @@ Slametrics.getMetricsForSlaName = (month,slaName,date,cb) => {
 
   
 Slametrics.getTrendsForSlaName = (month,slaName,limit,date,cb) => {
-
-   console.log(date);
 
 
    var filter =   { 
