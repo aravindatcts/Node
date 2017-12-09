@@ -39,14 +39,13 @@ Slametrics.getTrendMetrics = (month,date,limit,cb) => {
        where :
            {'and': 
              [ {'month_ind' : month},
-            //  { 'date': { between: [date,nextDate] }},
               { 'date': { lt: nextDate }},
 
            ]},
-     //  include: ['slas'],
        order: 'date DESC',
        limit: limit
      };
+ console.log(nextDate);
 
   return Slametrics.find(filter).then(function(slametrics) {
 
@@ -98,12 +97,15 @@ Slametrics.getMetricsForDate = (month,date,cb) => {
      };
 
   return Slametrics.findOne(filter).then(function(slametrics) {
+
       return slametrics;
     }).catch(function(err) {
       console.log(err);
     });
 
 };
+
+
 
  //Get Metrics for provided Date 
   Slametrics.remoteMethod('getMetricsForDate',{
@@ -118,6 +120,125 @@ Slametrics.getMetricsForDate = (month,date,cb) => {
       },
       returns: [{arg: 'slametrics', type:'Object'}]
   });
+  
+
+Slametrics.getMetricsForSlaName = (month,slaName,date,cb) => {
+
+ var nextDate;
+  if (month){
+       
+     nextDate = moment(date).add(1,'M').toDate();
+     console.log(nextDate);
+  } else 
+  {
+      nextDate = moment(date).add(1,'d').toDate();
+  }
+
+   //Filter based on month Indicator and  sort it based on the latest date   
+   var filter =   { 
+       where :
+           {'and': 
+             [ {'month_ind' : month},
+              { 'date': { between: [date,nextDate] }},
+              { 'slalList.slaname': slaName  }
+           ]}
+     };
+
+  return Slametrics.find(filter).then(function(slametrics) {
+   let finalData = [];
+     slametrics.forEach((slametric) => {
+           let slaLists = slametric["slalList"];
+           let lobname = slametric["lob_name"];
+            let slaL =  slaLists.filter((sla) => { 
+                    return (sla["slaname"] == slaName) ;
+            } ) 
+           
+            let slaList =  {"lobname" : lobname,
+                             "slaList":slaL
+                            };
+            finalData.push(slaList);                 
+     });    
+
+      return finalData;
+    }).catch(function(err) {
+      console.log(err);
+    });
+};
+
+
+
+
+   Slametrics.remoteMethod('getMetricsForSlaName',{
+      description: "Get metrics for provided Date,SLANAME", 
+      accepts : [ 
+          {arg:'month',type:'Boolean'},
+          {arg:'slaname',type:'String'},
+          {arg:'date' ,type:'Date'}
+      ],
+      http: { 
+          path : '/getMetricsForSlaName',
+          verb : 'get'
+      },
+      returns: [{arg: 'slametrics', type:'Object'}]
+  });  
+
+  
+Slametrics.getTrendsForSlaName = (month,slaName,limit,date,cb) => {
+
+   console.log(date);
+
+
+   var filter =   { 
+       where :
+           {'and': 
+             [ {'month_ind' : month},
+              { 'date': { lt: date }},
+              { 'slalList.slaname': slaName  }
+           ]},
+       order: 'date DESC',
+       limit: limit
+     };
+
+  return Slametrics.find(filter).then(function(slametrics) {
+
+   let finalData = [];
+    console.log(slametrics);
+     slametrics.forEach((slametric) => {
+           let slaDate = slametric["date"];
+           let slaLists = slametric["slalList"];
+           let lobname = slametric["lob_name"];
+            let slaL =  slaLists.filter((sla) => { 
+                    return (sla["slaname"] == slaName) ;
+            } ) 
+           
+            let slaList =  {
+                 "slaDate" : slaDate,
+                 "lobname" : lobname,
+                 "slaList":slaL
+                 };
+            finalData.push(slaList);                 
+     });    
+
+      return finalData;
+    }).catch(function(err) {
+      console.log(err);
+    });
+};
+
+Slametrics.remoteMethod('getTrendsForSlaName',{
+      description: "Get Trends for provided Date,SLANAME", 
+      accepts : [ 
+          {arg:'month',type:'Boolean'},
+          {arg:'slaname',type:'String'},
+          {arg:'limit' ,type:'Number'},
+          {arg:'date' ,type:'Date'}
+      ],
+      http: { 
+          path : '/getTrendsForSlaName',
+          verb : 'get'
+      },
+      returns: [{arg: 'slametrics', type:'Object'}]
+  });  
 
 
 };

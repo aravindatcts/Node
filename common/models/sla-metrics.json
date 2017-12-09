@@ -14,17 +14,11 @@
     "month_ind": {
       "type": "boolean",
       "required": true,
-      "default":false
+      "default": false
     },
     "lob_name": {
       "type": "string",
       "required": true
-    },
-    "sla_reasons": {
-      "type": [
-        "string"
-      ],
-      "required": false
     }
   },
   "validations": [],
