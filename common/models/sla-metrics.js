@@ -34,7 +34,6 @@ var cursor = coll.aggregate([
 
 cursor.each(function(err, doc) {
   let eventemitted = false;
-
   if(!eventemitted) {
     var socket = Slametrics.app.io;
     pubsub.publish(socket, {
