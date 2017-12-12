@@ -12,16 +12,13 @@ module.exports = function(Slametrics) {
 
 Slametrics.getLatestSlaMetrics = (month,lobname,cb) => {  
 
-  if (!lobname.trim()){
-      lobname = "Combined"
-  }
-
    var filter = { 
-       where : {'and': [
-           { 'month_ind' : month},
-          {'lob_name' : lobname}
-       ],
-       order: 'date DESC' }};
+       where : 
+    {'and': 
+             [ {'month_ind' : month},
+              {'lob_name' : lobname}
+           ]}
+     };
 
 
 var coll = Slametrics.getDataSource().connector.collection('slaMetrics');
@@ -32,13 +29,17 @@ var cursor = coll.aggregate([
 ]);
  
 
+console.log(month);
+console.log(lobname);
+
 cursor.each(function(err, doc) {
   let eventemitted = false;
+  console.log(doc);
   if(!eventemitted) {
     var socket = Slametrics.app.io;
     pubsub.publish(socket, {
       collectionName: 'slaMetrics',
-      data: JSON.stringify(doc.updateDescription),
+      data: 'data',
       method: 'update',
     });
     eventemitted = true;
@@ -48,10 +49,13 @@ cursor.each(function(err, doc) {
 
 
   return Slametrics.findOne(filter).then(function(slametrics) {
+      console.log(slametrics);
       return slametrics;
     }).catch(function(err) {
       console.log(err);
     });
+
+    
 };
 
 
