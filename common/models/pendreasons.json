@@ -1,0 +1,28 @@
+{
+  "name": "pendreasons",
+  "plural": "pendreasons",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "pendDate": {
+      "type": "date",
+      "required": true
+    },
+    "totalclaims": {
+      "type": "Number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "pendreasons": {
+      "type": "embedsMany",
+      "model": "pendreason"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

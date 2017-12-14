@@ -12,7 +12,7 @@
     },
     "updatedDate": {
       "type": "date",
-      "id":true
+      "id": true
     },
     "comment": {
       "type": "string"

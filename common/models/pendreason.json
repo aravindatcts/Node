@@ -1,0 +1,27 @@
+{
+  "name": "pendreason",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "reason": {
+      "type": "string",
+      "id": true,
+      "required": true
+    },
+    "pendclaims": {
+      "type": "number",
+      "required": true
+    },
+    "pendpercent": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

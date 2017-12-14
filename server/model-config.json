@@ -27,5 +27,13 @@
   "slacomments": {
     "dataSource": "mongods",
     "public": true
+  },
+  "pendreasons": {
+    "dataSource": "mongods",
+    "public": true
+  },
+  "pendreason": {
+    "dataSource": "mongods",
+    "public": false
   }
 }
