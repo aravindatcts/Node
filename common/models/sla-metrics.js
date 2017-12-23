@@ -48,8 +48,7 @@ cursor.each(function(err, doc) {
   });
 
 
-  return Slametrics.findOne(filter).then(function(slametrics) {
-      console.log(slametrics);
+  return Slametrics.findOne(filter).then(function(slametrics) {   
       return slametrics;
     }).catch(function(err) {
       console.log(err);

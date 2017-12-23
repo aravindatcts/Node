@@ -39,9 +39,9 @@
   "User": {
     "dataSource": "mongods",
     "options": {
-    "realmRequired": false,
-    "realmDelimiter": ":"
-  }
+      "realmRequired": false,
+      "realmDelimiter": ":"
+    }
   },
   "AccessToken": {
     "dataSource": "mongods",
@@ -61,5 +61,9 @@
   "Role": {
     "dataSource": "mongods",
     "public": false
+  },
+  "Settings": {
+    "dataSource": "mongods",
+    "public": true
   }
 }
