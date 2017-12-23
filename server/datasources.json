@@ -8,5 +8,15 @@
     "name": "mongods",
     "user": "",
     "connector": "mongodb"
+  },
+  "userAuthentication": {
+    "host": "52.15.83.203",
+    "port": "27019",
+    "url": "",
+    "database": "role",
+    "password": "",
+    "name": "userAuthentication",
+    "user": "",
+    "connector": "mongodb"
   }
 }

@@ -26,13 +26,39 @@
   },
   "slacomments": {
     "dataSource": "mongods",
-    "public": true
+    "public": false
   },
   "pendreasons": {
     "dataSource": "mongods",
-    "public": true
+    "public": false
   },
   "pendreason": {
+    "dataSource": "mongods",
+    "public": false
+  },
+  "User": {
+    "dataSource": "mongods",
+    "options": {
+    "realmRequired": false,
+    "realmDelimiter": ":"
+  }
+  },
+  "AccessToken": {
+    "dataSource": "mongods",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "mongods",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "mongods",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
     "dataSource": "mongods",
     "public": false
   }
